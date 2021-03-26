@@ -147,7 +147,8 @@ contract VaultFlipToFlip is VaultController, IStrategy {
 
     function harvest() external override onlyKeeper {
         MDEX_MASTER_CHEF.withdraw(pid, 0);
-        uint mdxAmount = mdx.balanceOf(address(this)).sub(totalSwapRewards);
+        getSwapRewards();
+        uint mdxAmount = mdx.balanceOf(address(this));
         uint mdxForToken0 = mdxAmount.div(2);
         mdxToToken(_token0, mdxForToken0);
         mdxToToken(_token1, mdxAmount.sub(mdxForToken0));
@@ -224,8 +225,6 @@ contract VaultFlipToFlip is VaultController, IStrategy {
             path[1] = address(WHT);
             path[2] = _token;
         }
-        IERC20(_token).safeApprove(address(ROUTER), 0);
-        IERC20(_token).safeApprove(address(ROUTER), amount);
         ROUTER.swapExactTokensForTokens(amount, 0, path, address(this), block.timestamp);
     }
 
@@ -241,17 +240,17 @@ contract VaultFlipToFlip is VaultController, IStrategy {
     }
 
     
-    function getSwapRewards() public onlyOwner {
+    function getSwapRewards() private {
         uint getSwapping = mdx.balanceOf(address(this));
         SwapMing.takerWithdraw();
         uint getSwapped = mdx.balanceOf(address(this));
         totalSwapRewards = totalSwapRewards.add(getSwapped).sub(getSwapping);
     } 
  
-    function withdrawSwapRewards(address _dev) external onlyOwner{
-        require(mdx.balanceOf(address(this)) > 0, 'Not Have SwapRewards.');
-        mdx.safeTransfer(_dev,mdx.balanceOf(address(this)));
-    }
+    // function withdrawSwapRewards(address _dev) external onlyOwner{
+    //     require(mdx.balanceOf(address(this)) > 0, 'Not Have SwapRewards.');
+    //     mdx.safeTransfer(_dev,mdx.balanceOf(address(this)));
+    // }
     /* ========== SALVAGE PURPOSE ONLY ========== */
 
     function recoverToken(address tokenAddress, uint tokenAmount) external override onlyOwner {

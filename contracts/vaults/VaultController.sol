@@ -18,7 +18,7 @@ abstract contract VaultController is IVaultController, PausableUpgradeable, Whit
     using SafeERC20 for IERC20;
 
     /* ========== CONSTANT VARIABLES ========== */
-    ERC20 private constant Wallaby = ERC20(0x793CF59D2C4586D599165ca86Cc96c1B405d34C4);
+    ERC20 private constant Wallaby = ERC20(0x7A631cAa46a451E1844f83114cd74CD1DE07D86F);
 
     /* ========== STATE VARIABLES ========== */
 
