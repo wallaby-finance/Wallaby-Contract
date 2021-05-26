@@ -88,8 +88,8 @@ contract StrategyHelperV2 is IStrategyHelper{
 
         uint currPrice = WHT.balanceOf(pair).mul(10**decimal).div(IERC20(_token).balanceOf(pair));
 
-        require(currPrice <= price.mul(130).div(100), "currPrice too high!");
-        require(currPrice >= price.mul(70).div(100), "currPrice too low!");
+        require(currPrice <= price.mul(120).div(100), "currPrice too high!");
+        require(currPrice >= price.mul(80).div(100), "currPrice too low!");
         return currPrice;
     }
 
@@ -99,8 +99,8 @@ contract StrategyHelperV2 is IStrategyHelper{
 
         uint currPrice = WHT.balanceOf(mdx_POOL).mul(1e18).div(mdx.balanceOf(mdx_POOL));
 
-        require(currPrice <= price.mul(130).div(100), "currPrice too high!");
-        require(currPrice >= price.mul(70).div(100), "currPrice too low!");
+        require(currPrice <= price.mul(120).div(100), "currPrice too high!");
+        require(currPrice >= price.mul(80).div(100), "currPrice too low!");
         return currPrice;
     }
 
@@ -110,8 +110,8 @@ contract StrategyHelperV2 is IStrategyHelper{
         uint meta = 1;
         uint staPrice = meta.mul(1e26).div(price);
         uint currPrice = HUSD.balanceOf(HT_HUSD_POOL).mul(1e18).div(WHT.balanceOf(HT_HUSD_POOL));
-        require(currPrice <= staPrice.mul(130).div(100), "currPrice too high!");
-        require(currPrice >= staPrice.mul(70).div(100), "currPrice too low!");
+        require(currPrice <= staPrice.mul(120).div(100), "currPrice too high!");
+        require(currPrice >= staPrice.mul(80).div(100), "currPrice too low!");
         
         return currPrice;
     }
